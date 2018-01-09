@@ -12,8 +12,15 @@ import middlefield
 
 @middlefield.COMMANDS.command(
     parser=command('',
-                   what=option(type=typing.List[str],
-                               have_default=True)),
-    )
+                   outdir=option(type=str),
+                   input=option(type=str),
+    ),
+    dependencies=['executor'])
 def beamer(args, dependencies):
-    return
+    xctor = dependencies['executor']
+    outdir = os.path.abspath(args.get('outdir', 'build'))
+    input = args.get('input', 'talk.tex')
+    if not os.path.isdir(outdir):
+        os.makedirs(outdir)
+    shutil.copy(input, os.path.join(outdir, 'talk.tex'))
+    executor.command(['pdflatex', 'talk.tex']).batch(cwd=outdir)
