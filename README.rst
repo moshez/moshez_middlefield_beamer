@@ -1,4 +1,4 @@
-Middlefield Echo
-================
+Middlefield Beamer
+==================
 
-A special echoer
+Create awesome beamer presentations!
