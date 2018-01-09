@@ -9,6 +9,7 @@ import seashore
 
 from moshez_middlefield_beamer import _impl
 
+
 class FakeShell(object):
 
     def clone(self):
@@ -22,6 +23,7 @@ class FakeShell(object):
             shutil.copy(src, dest)
             return
         raise NotImplementedError(_cmd, args, kwargs)
+
 
 class ImplTest(unittest.TestCase):
 
