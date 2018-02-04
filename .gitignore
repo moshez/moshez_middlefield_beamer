@@ -5,3 +5,4 @@ __pycache__
 .python-version
 /.eggs
 /.cache
+/.pytest_cache

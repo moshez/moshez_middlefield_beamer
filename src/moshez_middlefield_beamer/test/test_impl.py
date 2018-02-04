@@ -43,16 +43,16 @@ class ImplTest(unittest.TestCase):
         output_dir = os.path.join(build_dir, 'build')
         self.addCleanup(lambda: shutil.rmtree(source_dir))
         source_dir = tempfile.mkdtemp()
-        source_name = os.path.join(self.source_dir, 'talk.tex')
-        code_name = os.path.join(self.source_dir, 'foo.py')
-        with open(source_name, 'wb) as filep:
+        source_name = os.path.join(source_dir, 'talk.tex')
+        code_name = os.path.join(source_dir, 'foo.py')
+        with open(source_name, 'wb') as filep:
             filep.write(b'''this is like a source
                             \lstinputlisting{foo.py}
                          ''')
             filep.flush()
-        with open(code_name, 'wb) as filep:
+        with open(code_name, 'wb') as filep:
             filep.write(b'import this\n')
-        _impl.beamer(dict(input=source_name
+        _impl.beamer(dict(input=source_name,
                           outdir=output_dir),
                      dict(executor=executor))
         with open(os.path.join(output_dir, 'talk.pdf')) as filep:
