@@ -24,7 +24,7 @@ class FakeShell(object):
                 tex = inp.read()
             lines = tex.decode('ascii').splitlines()
             for line in lines:
-                if not line.strip().startswith('\lstinputlisting'):
+                if not line.strip().startswith(r'\lstinputlisting'):
                     continue
                 file_name = os.path.join(cwd, line.split('{')[1].split('}')[0])
                 if not os.path.exists(file_name):
@@ -46,9 +46,8 @@ class ImplTest(unittest.TestCase):
         source_name = os.path.join(source_dir, 'talk.tex')
         code_name = os.path.join(source_dir, 'foo.py')
         with open(source_name, 'wb') as filep:
-            filep.write(b'''this is like a source
-                            \lstinputlisting{foo.py}
-                         ''')
+            filep.write(br'''\lstinputlisting{foo.py}
+                             this is like a source''')
             filep.flush()
         with open(code_name, 'wb') as filep:
             filep.write(b'import this\n')
@@ -59,7 +58,7 @@ class ImplTest(unittest.TestCase):
             slides = filep.read().splitlines()
         with open(os.path.join(output_dir, 'handout.pdf')) as filep:
             handout = filep.read().splitlines()
-        self.assertEquals(slides.pop(), 'this is like a source')
-        self.assertEquals(handout.pop(), 'this is like a source')
+        self.assertEquals(slides.pop().strip(), 'this is like a source')
+        self.assertEquals(handout.pop().strip(), 'this is like a source')
         self.assertEquals(slides.pop(0).split('{')[-1][:-1], 'beamer')
         self.assertEquals(handout.pop(0).split('{')[-1][:-1], 'article')
