@@ -38,10 +38,9 @@ def beamer(args, dependencies):
     with open(os.path.join(outdir, 'talk.tex'), 'wb') as filep:
         filep.write(b'\\documentclass[ignorenonframetext]{beamer}\n')
         filep.write(source)
-    xctor.command(['pdflatex', 'talk.tex']).batch(cwd=outdir)
     with open(os.path.join(outdir, 'handout.tex'), 'wb') as filep:
         filep.write(b'\\documentclass{article}\n')
         filep.write(b'\\usepackage{beamerarticle}\n')
         filep.write(source)
-    xctor.command(['pdflatex', 'talk.tex']).batch(cwd=outdir)
-    xctor.command(['pdflatex', 'handout.tex']).batch(cwd=outdir)
+    # xctor.command(['pdflatex', 'talk.tex']).batch(cwd=outdir)
+    # xctor.command(['pdflatex', 'handout.tex']).batch(cwd=outdir)
